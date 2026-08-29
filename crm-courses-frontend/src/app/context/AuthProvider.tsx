@@ -18,22 +18,31 @@ export const AuthProvider: React.FC<{
         localStorage.getItem("courseFullName")
     );
 
+    // Por default true (mismo criterio que el backend): si no hay nada
+    // guardado todavia, se asume que hay que pedir el cambio.
+    const [mustChangePassword, setMustChangePassword] = useState<boolean>(
+        localStorage.getItem("courseMustChangePassword") !== "false"
+    );
+
     // Igual que en el crm-frontend: se escribe en localStorage de forma
     // sincrona dentro de login()/logout(), NO en un useEffect, para que
     // el primer fetch despues de navegar ya encuentre el token guardado.
     const login = (
         newToken: string,
         employeeId: string,
-        employeeFullName: string
+        employeeFullName: string,
+        newMustChangePassword: boolean
     ) => {
 
         localStorage.setItem("courseToken", newToken);
         localStorage.setItem("courseEmployeeId", employeeId);
         localStorage.setItem("courseFullName", employeeFullName);
+        localStorage.setItem("courseMustChangePassword", String(newMustChangePassword));
 
         setToken(newToken);
         setId(employeeId);
         setFullName(employeeFullName);
+        setMustChangePassword(newMustChangePassword);
 
     };
 
@@ -43,11 +52,18 @@ export const AuthProvider: React.FC<{
         localStorage.removeItem("courseToken");
         localStorage.removeItem("courseEmployeeId");
         localStorage.removeItem("courseFullName");
+        localStorage.removeItem("courseMustChangePassword");
 
         setToken(null);
         setId(null);
         setFullName(null);
+        setMustChangePassword(true);
 
+    };
+
+    const clearMustChangePassword = () => {
+        localStorage.setItem("courseMustChangePassword", "false");
+        setMustChangePassword(false);
     };
 
 
@@ -57,8 +73,10 @@ export const AuthProvider: React.FC<{
                 token,
                 id,
                 fullName,
+                mustChangePassword,
                 login,
-                logout
+                logout,
+                clearMustChangePassword
             }}
         >
             {children}

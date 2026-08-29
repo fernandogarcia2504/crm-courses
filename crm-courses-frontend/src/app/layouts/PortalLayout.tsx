@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
-import { LogOut, ShieldCheck } from "lucide-react";
+import { LogOut, ShieldCheck, KeyRound } from "lucide-react";
 
 import { AuthContext } from "../context/authContextValue";
 
@@ -28,6 +28,13 @@ export default function PortalLayout() {
                     {authContext?.fullName && (
                         <span className="text-sm">{authContext.fullName}</span>
                     )}
+                    <button
+                        onClick={() => navigate("/cambiar-contrasena")}
+                        className="flex items-center gap-1 text-sm text-[#959595] hover:text-[#ECECEC] cursor-pointer"
+                    >
+                        <KeyRound size={16} />
+                        Cambiar contrasena
+                    </button>
                     <button
                         onClick={handleLogout}
                         className="flex items-center gap-1 text-sm text-[#959595] hover:text-[#ECECEC] cursor-pointer"

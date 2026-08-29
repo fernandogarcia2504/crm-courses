@@ -53,10 +53,11 @@ export default function LoginPage() {
             authContext.login(
                 data.token,
                 data.employee.id,
-                data.employee.fullName
+                data.employee.fullName,
+                data.employee.mustChangePassword
             );
 
-            navigate("/curso");
+            navigate(data.employee.mustChangePassword ? "/cambiar-contrasena" : "/curso");
 
         } catch (error: unknown) {
             if (error instanceof Error) {

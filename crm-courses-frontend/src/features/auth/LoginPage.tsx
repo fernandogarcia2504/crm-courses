@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { ShieldCheck } from "lucide-react";
 
-import { AuthContext } from "../../app/context/authContextValue";
+import { AuthContext } from "../../app/context/AuthContextValue";
 
 const API_URL = import.meta.env.VITE_API_URL;
 

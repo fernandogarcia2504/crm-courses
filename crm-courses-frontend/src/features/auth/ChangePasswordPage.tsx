@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { KeyRound } from "lucide-react";
 
-import { AuthContext } from "../../app/context/authContextValue";
+import { AuthContext } from "../../app/context/AuthContextValue";
 
 const API_URL = import.meta.env.VITE_API_URL;
 

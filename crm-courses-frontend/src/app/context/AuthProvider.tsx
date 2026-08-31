@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { AuthContext } from "./authContextValue";
+import { AuthContext } from "./AuthContextValue";
 
 export const AuthProvider: React.FC<{
     children: React.ReactNode

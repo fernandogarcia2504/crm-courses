@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { LogOut, ShieldCheck, KeyRound } from "lucide-react";
 
-import { AuthContext } from "../context/authContextValue";
+import { AuthContext } from "../context/AuthContextValue";
 
 export default function PortalLayout() {
 

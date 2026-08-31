@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
-import { AuthContext } from "../context/authContextValue";
+import { AuthContext } from "../context/AuthContextValue";
 
 export default function ProtectedRoute() {
 

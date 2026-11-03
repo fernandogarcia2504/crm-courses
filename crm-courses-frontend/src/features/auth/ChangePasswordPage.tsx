@@ -6,6 +6,8 @@ import { AuthContext } from "../../app/context/AuthContextValue";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
+const input = "w-full rounded-md border border-line-2 bg-surface-2 px-3 py-2 text-[0.9rem] outline-none transition-colors focus:border-accent";
+
 export default function ChangePasswordPage() {
 
     const navigate = useNavigate();
@@ -62,7 +64,7 @@ export default function ChangePasswordPage() {
             if (error instanceof Error) {
                 setError(error.message);
             } else {
-                setError("Ocurrio un error al cambiar la contraseña");
+                setError("Ocurrió un error al cambiar la contraseña");
             }
         } finally {
             setLoading(false);
@@ -70,80 +72,47 @@ export default function ChangePasswordPage() {
     };
 
     return (
-        <div className="w-full h-full flex flex-col items-center justify-center gap-8 px-4">
+        <div className="mx-auto flex w-full max-w-[400px] flex-col gap-8 px-6">
 
-            <div className="flex flex-col items-center gap-2">
-                <KeyRound size={40} className="text-[#2F76D2]" />
-                <h1 className="text-2xl text-center">
+            <div className="flex flex-col items-center gap-3 text-center">
+                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-surface-2 text-accent">
+                    <KeyRound size={22} />
+                </span>
+                <h1 className="text-[1.3rem] font-semibold tracking-tight">
                     {isForced ? "Cambia tu contraseña temporal" : "Cambiar contraseña"}
                 </h1>
             </div>
 
-            <form
-                onSubmit={handleSubmit}
-                className="w-full max-w-sm bg-[#1A1A1A] flex flex-col gap-4 rounded-md shadow-lg p-6"
-            >
-                <div className="flex flex-col gap-1">
-                    {isForced && (
-                        <p className="text-sm text-[#959595]">
-                            Por seguridad, antes de continuar necesitas cambiar la contraseña temporal que te compartió tu empresa por una tuya.
-                        </p>
-                    )}
-                </div>
-
-                <div className="w-full flex flex-col gap-2">
-                    <label className="text-sm">Contraseña actual</label>
-                    <input
-                        value={currentPassword}
-                        onChange={(e) => setCurrentPassword(e.target.value)}
-                        type="password"
-                        className="w-full rounded-md px-3 py-2 bg-[#212121] placeholder:text-sm"
-                        placeholder={isForced ? "Tu contraseña temporal" : "Tu contraseña actual"}
-                        required
-                    />
-                </div>
-
-                <div className="w-full flex flex-col gap-2">
-                    <label className="text-sm">Contraseña nueva</label>
-                    <input
-                        value={newPassword}
-                        onChange={(e) => setNewPassword(e.target.value)}
-                        type="password"
-                        className="w-full rounded-md px-3 py-2 bg-[#212121] placeholder:text-sm"
-                        placeholder="Mínimo 8 caracteres"
-                        required
-                    />
-                </div>
-
-                <div className="w-full flex flex-col gap-2">
-                    <label className="text-sm">Confirma la contraseña nueva</label>
-                    <input
-                        value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-                        type="password"
-                        className="w-full rounded-md px-3 py-2 bg-[#212121] placeholder:text-sm"
-                        required
-                    />
-                </div>
-
-                {error && (
-                    <p className="text-sm text-red-400">{error}</p>
+            <form onSubmit={handleSubmit} className="flex w-full flex-col gap-4 rounded-xl border border-line bg-surface p-6">
+                {isForced && (
+                    <p className="text-[0.84rem] text-muted">
+                        Por seguridad, antes de continuar necesitas cambiar la contraseña temporal que te compartió tu empresa por una tuya.
+                    </p>
                 )}
 
-                <button
-                    type="submit"
-                    disabled={loading}
-                    className="w-full rounded-md py-2 bg-[#2F76D2] mt-4 cursor-pointer disabled:opacity-60"
-                >
+                <div className="flex w-full flex-col gap-1.5">
+                    <label className="text-[0.8rem] font-medium text-muted">Contraseña actual</label>
+                    <input value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} type="password" className={input} placeholder={isForced ? "Tu contraseña temporal" : "Tu contraseña actual"} required />
+                </div>
+
+                <div className="flex w-full flex-col gap-1.5">
+                    <label className="text-[0.8rem] font-medium text-muted">Contraseña nueva</label>
+                    <input value={newPassword} onChange={(e) => setNewPassword(e.target.value)} type="password" className={input} placeholder="Mínimo 8 caracteres" required />
+                </div>
+
+                <div className="flex w-full flex-col gap-1.5">
+                    <label className="text-[0.8rem] font-medium text-muted">Confirma la contraseña nueva</label>
+                    <input value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} type="password" className={input} required />
+                </div>
+
+                {error && <p className="text-[0.82rem] text-danger">{error}</p>}
+
+                <button type="submit" disabled={loading} className="mt-2 w-full rounded-md bg-accent py-2 text-[0.9rem] font-semibold text-accent-ink transition-colors hover:bg-accent-2 disabled:opacity-60">
                     {loading ? "Guardando..." : "Cambiar contraseña"}
                 </button>
 
                 {!isForced && (
-                    <button
-                        type="button"
-                        onClick={() => navigate("/curso")}
-                        className="w-full text-sm text-[#959595] hover:text-[#ECECEC]"
-                    >
+                    <button type="button" onClick={() => navigate("/curso")} className="w-full text-[0.82rem] text-muted transition-colors hover:text-ink">
                         Cancelar
                     </button>
                 )}

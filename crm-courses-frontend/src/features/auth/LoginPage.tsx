@@ -1,10 +1,21 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { ShieldCheck } from "lucide-react";
 
 import { AuthContext } from "../../app/context/AuthContextValue";
 
 const API_URL = import.meta.env.VITE_API_URL;
+
+const Mark = () => (
+    <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent">
+        <svg width="21" height="21" viewBox="0 0 26 26" fill="none">
+            <path d="M9 23 L10.5 9 H15.5 L17 23 Z" stroke="#fff" strokeWidth="1.8" strokeLinejoin="round" />
+            <path d="M8.5 15 H17.5" stroke="#fff" strokeWidth="1.5" />
+            <circle cx="13" cy="6.2" r="2.5" fill="#fff" />
+        </svg>
+    </span>
+);
+
+const input = "w-full rounded-md border border-line-2 bg-surface-2 px-3 py-2 text-[0.9rem] outline-none transition-colors focus:border-accent";
 
 export default function LoginPage() {
 
@@ -63,7 +74,7 @@ export default function LoginPage() {
             if (error instanceof Error) {
                 setError(error.message);
             } else {
-                setError("Ocurrio un error al iniciar sesion");
+                setError("Ocurrió un error al iniciar sesión");
             }
         } finally {
             setLoading(false);
@@ -71,62 +82,36 @@ export default function LoginPage() {
     };
 
     return (
-        <div className="w-full h-full flex flex-col items-center justify-center gap-8 px-4">
+        <div className="mx-auto flex w-full max-w-[400px] flex-col gap-8 px-6">
 
-            <div className="flex flex-col items-center gap-2">
-                <ShieldCheck size={40} className="text-[#2F76D2]" />
-                <h1 className="text-2xl text-center">
-                    Curso de Concientizacion en Ciberseguridad
-                </h1>
+            <div className="flex flex-col items-center gap-3 text-center">
+                <Mark />
+                <div>
+                    <p className="text-[0.95rem] font-semibold tracking-tight">Atalaya · Capacitación</p>
+                    <h1 className="mt-1 text-[1.4rem] font-semibold tracking-tight">Curso de concientización</h1>
+                </div>
             </div>
 
-            <form
-                onSubmit={handleSubmit}
-                className="w-full max-w-sm bg-[#1A1A1A] flex flex-col gap-4 rounded-md shadow-lg p-6"
-            >
+            <form onSubmit={handleSubmit} className="flex w-full flex-col gap-4 rounded-xl border border-line bg-surface p-6">
                 <div className="flex flex-col gap-1">
-                    <p className="text-xl">Iniciar Sesion</p>
-                    <p className="text-sm text-[#959595]">
-                        Usa las credenciales que te compartio tu empresa
-                    </p>
+                    <p className="text-[1.05rem] font-semibold">Iniciar sesión</p>
+                    <p className="text-[0.84rem] text-muted">Usa las credenciales que te compartió tu empresa</p>
                 </div>
 
-                <div className="w-full flex flex-col gap-2">
-                    <label className="text-sm">Usuario</label>
-                    <input
-                        name="username"
-                        value={formData.username}
-                        onChange={handleChange}
-                        type="text"
-                        className="w-full rounded-md px-3 py-2 bg-[#212121] placeholder:text-sm"
-                        placeholder="Tu correo o usuario"
-                        required
-                    />
+                <div className="flex w-full flex-col gap-1.5">
+                    <label className="text-[0.8rem] font-medium text-muted">Usuario</label>
+                    <input name="username" value={formData.username} onChange={handleChange} type="text" className={input} placeholder="Tu correo o usuario" required />
                 </div>
 
-                <div className="w-full flex flex-col gap-2">
-                    <label className="text-sm">Contrasena</label>
-                    <input
-                        name="password"
-                        value={formData.password}
-                        onChange={handleChange}
-                        type="password"
-                        className="w-full rounded-md px-3 py-2 bg-[#212121] placeholder:text-sm"
-                        placeholder="Tu contrasena temporal"
-                        required
-                    />
+                <div className="flex w-full flex-col gap-1.5">
+                    <label className="text-[0.8rem] font-medium text-muted">Contraseña</label>
+                    <input name="password" value={formData.password} onChange={handleChange} type="password" className={input} placeholder="Tu contraseña temporal" required />
                 </div>
 
-                {error && (
-                    <p className="text-sm text-red-400">{error}</p>
-                )}
+                {error && <p className="text-[0.82rem] text-danger">{error}</p>}
 
-                <button
-                    type="submit"
-                    disabled={loading}
-                    className="w-full rounded-md py-2 bg-[#2F76D2] mt-4 cursor-pointer disabled:opacity-60"
-                >
-                    {loading ? "Iniciando sesion..." : "Iniciar Sesion"}
+                <button type="submit" disabled={loading} className="mt-2 w-full rounded-md bg-accent py-2 text-[0.9rem] font-semibold text-accent-ink transition-colors hover:bg-accent-2 disabled:opacity-60">
+                    {loading ? "Iniciando sesión..." : "Iniciar sesión"}
                 </button>
             </form>
         </div>

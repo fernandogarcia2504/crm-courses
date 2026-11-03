@@ -31,7 +31,8 @@ export default function CoursePage() {
 
     if (loading) {
         return (
-            <div className="w-full flex items-center justify-center py-24 text-[#959595]">
+            <div className="flex w-full items-center justify-center gap-2.5 py-24 text-[0.9rem] text-muted">
+                <span className="h-4 w-4 animate-spin rounded-full border-2 border-line-2 border-t-accent" />
                 Cargando curso...
             </div>
         );
@@ -39,8 +40,8 @@ export default function CoursePage() {
 
     if (error) {
         return (
-            <div className="w-full flex items-center justify-center py-24 text-red-400 text-sm text-center px-4">
-                {error}
+            <div className="mx-auto mt-10 max-w-2xl px-6">
+                <div className="rounded-md border border-danger/30 bg-danger/10 px-3.5 py-2.5 text-center text-[0.86rem] text-danger">{error}</div>
             </div>
         );
     }
@@ -48,34 +49,28 @@ export default function CoursePage() {
     if (!course) return null;
 
     return (
-        <div className="w-full max-w-2xl mx-auto px-4 py-10 flex flex-col gap-6">
+        <div className="mx-auto flex w-full max-w-2xl flex-col gap-6 px-6 py-10">
 
-            <div className="flex flex-col gap-2">
-                <h1 className="text-2xl">{course.title}</h1>
-                {course.description && (
-                    <p className="text-sm text-[#959595]">{course.description}</p>
-                )}
-
-                <div className="w-full bg-[#212121] rounded-full h-2 mt-2 overflow-hidden">
-                    <div
-                        className="bg-[#2F76D2] h-full transition-all"
-                        style={{ width: `${course.progress}%` }}
-                    />
+            <div className="flex flex-col gap-3">
+                <div>
+                    <h1 className="text-[1.5rem] font-semibold tracking-tight">{course.title}</h1>
+                    {course.description && <p className="mt-1 text-[0.9rem] text-muted">{course.description}</p>}
                 </div>
-                <p className="text-xs text-[#959595]">
-                    {course.completed
-                        ? "Curso completado"
-                        : `${course.progress}% completado`}
+
+                <div className="flex items-center gap-3">
+                    <div className="h-2 flex-1 overflow-hidden rounded-full bg-surface-2">
+                        <div className="h-full rounded-full bg-accent transition-all" style={{ width: `${course.progress}%` }} />
+                    </div>
+                    <span className="tnum text-[0.84rem] font-semibold">{course.progress}%</span>
+                </div>
+                <p className="text-[0.78rem] text-faint">
+                    {course.completed ? "Curso completado 🎉" : "Completa todos los módulos para terminar el curso"}
                 </p>
             </div>
 
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-3">
                 {course.modules.map((module) => (
-                    <ModuleCard
-                        key={module.id}
-                        module={module}
-                        onUpdated={loadCourse}
-                    />
+                    <ModuleCard key={module.id} module={module} onUpdated={loadCourse} />
                 ))}
             </div>
         </div>

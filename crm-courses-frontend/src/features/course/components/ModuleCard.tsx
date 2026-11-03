@@ -10,6 +10,8 @@ interface ModuleCardProps {
     onUpdated: () => void;
 }
 
+const linkChip = "flex items-center gap-2 rounded-md border border-line-2 bg-surface-2 px-3 py-2 text-[0.84rem] text-muted transition-colors hover:border-faint hover:text-ink";
+
 export default function ModuleCard({ module, onUpdated }: ModuleCardProps) {
 
     const [showQuiz, setShowQuiz] = useState(false);
@@ -32,58 +34,38 @@ export default function ModuleCard({ module, onUpdated }: ModuleCardProps) {
     };
 
     return (
-        <div className="bg-[#1A1A1A] rounded-md p-5 flex flex-col gap-4">
+        <div className={`rounded-lg border bg-surface p-5 transition-colors ${module.completed ? "border-good/30" : "border-line"}`}>
 
             <div className="flex items-start justify-between gap-3">
-                <div>
-                    <p className="text-lg">{module.title}</p>
-                    {module.description && (
-                        <p className="text-sm text-[#959595] mt-1">{module.description}</p>
-                    )}
+                <div className="min-w-0">
+                    <p className="text-[1rem] font-medium">{module.title}</p>
+                    {module.description && <p className="mt-1 text-[0.84rem] text-muted">{module.description}</p>}
                 </div>
 
                 {module.completed ? (
-                    <CheckCircle2 className="text-green-400 shrink-0" size={22} />
+                    <CheckCircle2 className="shrink-0 text-good" size={22} />
                 ) : (
-                    <Circle className="text-[#3A3A3A] shrink-0" size={22} />
+                    <Circle className="shrink-0 text-line-2" size={22} />
                 )}
             </div>
 
-            <div className="flex flex-col gap-2">
-
+            <div className="mt-4 flex flex-wrap gap-2">
                 {module.pdfUrl && (
-                    <a
-                        href={module.pdfUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="flex items-center gap-2 text-sm bg-[#212121] rounded-md px-3 py-2 hover:bg-[#262626]"
-                    >
-                        <FileText size={16} />
-                        Ver material (PDF)
+                    <a href={module.pdfUrl} target="_blank" rel="noreferrer" className={linkChip}>
+                        <FileText size={15} /> Ver material (PDF)
                     </a>
                 )}
 
                 {module.videoUrl && (
-                    <a
-                        href={module.videoUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="flex items-center gap-2 text-sm bg-[#212121] rounded-md px-3 py-2 hover:bg-[#262626]"
-                    >
-                        <PlayCircle size={16} />
-                        Ver video
+                    <a href={module.videoUrl} target="_blank" rel="noreferrer" className={linkChip}>
+                        <PlayCircle size={15} /> Ver video
                     </a>
                 )}
 
                 {module.hasQuiz && (
-                    <button
-                        onClick={() => setShowQuiz(true)}
-                        className="flex items-center gap-2 text-sm bg-[#212121] rounded-md px-3 py-2 hover:bg-[#262626] cursor-pointer"
-                    >
-                        <ClipboardCheck size={16} />
-                        {module.quizScore !== null
-                            ? `Repetir quiz (ultimo puntaje: ${module.quizScore}%)`
-                            : "Tomar quiz"}
+                    <button onClick={() => setShowQuiz(true)} className={`${linkChip} cursor-pointer`}>
+                        <ClipboardCheck size={15} />
+                        {module.quizScore !== null ? `Repetir quiz · ${module.quizScore}%` : "Tomar quiz"}
                     </button>
                 )}
             </div>
@@ -92,7 +74,7 @@ export default function ModuleCard({ module, onUpdated }: ModuleCardProps) {
                 <button
                     onClick={handleMarkComplete}
                     disabled={marking}
-                    className="self-start text-sm text-[#2F76D2] hover:underline cursor-pointer disabled:opacity-60"
+                    className="mt-4 text-[0.84rem] font-medium text-accent transition-opacity hover:underline disabled:opacity-60"
                 >
                     {marking ? "Marcando..." : "Marcar como completado"}
                 </button>
